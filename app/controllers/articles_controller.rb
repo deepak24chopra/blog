@@ -16,7 +16,7 @@ class ArticlesController < ApplicationController
 		#debugger
 		#render plain: params[:article].inspect
 		@article = Article.new(article_params)
-		@article.user_id = current_user
+		@article.user = current_user
 		if @article.save
 			flash[:success] = "Article was successfully created."
 			redirect_to article_path(@article)
@@ -58,7 +58,7 @@ class ArticlesController < ApplicationController
 	end
 
 	def article_params
-		params.require(:article).permit(:title,:description)
+		params.require(:article).permit(:title,:description, category_ids: [])
 	end
 
 	def require_same_user
